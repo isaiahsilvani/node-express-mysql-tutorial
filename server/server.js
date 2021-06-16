@@ -15,6 +15,13 @@ app.use(express.urlencoded({ extended: false }))
 // CREATE
 app.post('/insert', (request, response) => {
   console.log(request.body)
+  const { name } = request.body
+  const db = dbService.getDbServiceInstance()
+  const result = db.insertNewName(name)
+
+  result
+  .then(data => response.json({ success: true}))
+  .catch(err => console.log(err))
 })
 
 // READ
@@ -25,7 +32,6 @@ app.get('/getAll', (request, response) => {
   result
   .then(data => response.json({ data: data }))
   .catch(err => console.log(err))
-
 })
 
 // UPDATE

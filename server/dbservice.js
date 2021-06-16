@@ -52,6 +52,27 @@ class DbService {
       console.log(error)
     }
   }
+
+  async insertNewName(name) {
+    try {
+      // The current date so we can add it to new row alongside name
+      const dateAdded = new Date()
+      const insertId = await new Promise((resolve, reject) => {
+        // This is how we insert a new row into table names. We're passing parameters (name, date_added) as the parameters.
+        // When values come directly from the frontend, we need to "parametize" (?,?) our variables to avoid sql injections
+        const query = "INSERT INTO names (name, date_added) VALUES (?,?)";
+        connection.query(query, [name, dateAdded],(err, results) => {
+          if (err) reject(new Error(err.message))
+          resolve(results.insertId)
+        })
+      })
+      // Here is the insertId that was created when we made a new row. Yay!!! :D
+      console.log(insertId)
+
+    } catch (error) {
+        console.log(error)
+    }
+  }
 }
 
 // Export the DbService class so you can use it. I guess there is no ORM like in Mongoose and PostgreSQL
