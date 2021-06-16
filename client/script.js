@@ -37,9 +37,24 @@ function loadHTMLTable(data) {
   // Get the table's body so we can manipulate it based on data
   console.log(data)
   const table = document.querySelector('table tbody')
-  let tableHtml = ""
 
   if (data.length === 0) {
     table.innerHTML = "<tr><td class='no-data' colspan='5'>No Data</td></tr>"
+    return
   }
+  let tableHtml = ""
+
+  data.forEach(function({ id, name, date_added}) {
+    console.log(id, name, date_added)
+    tableHtml += "<tr>"
+    tableHtml += `<td>${id}</td>`
+    tableHtml += `<td>${name}</td>`
+    tableHtml += `<td>${date_added}</td>`
+    tableHtml += `<td><button class="delete-row-btn" data-id=${id}>Delete</button></td>`
+    tableHtml += `<td><button class="edit-row-btn" data-id=${id}>Edit</button></td>`
+    tableHtml += "</tr>"
+
+  })
+  console.log(tableHtml)
+  table.innerHTML = tableHtml
 }
