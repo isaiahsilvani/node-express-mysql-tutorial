@@ -6,8 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
   loadHTMLTable([])
 })
 
+
+// This is the function that will actually load the HTML table with data from mySQL
 function loadHTMLTable(data) {
-  // 
+  // Get the table's body so we can manipulate it based on data
   const table = document.querySelector('table tbody')
   let tableHtml = ""
 
