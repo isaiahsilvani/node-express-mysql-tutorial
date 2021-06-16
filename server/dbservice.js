@@ -46,6 +46,7 @@ class DbService {
       })
       // Here is the data that was fetched from mySQL database
       console.log(response)
+      return response
 
     } catch (error) {
       console.log(error)
