@@ -9,6 +9,29 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 
+// This is the function that will send the name input to the database and add it!
+const addBtn = document.querySelector('#add-name-btn')   // Grab the button using DOM
+addBtn.onclick = function () {
+  const nameInput = document.querySelector('#name-input')    // GRAB THE NAME INPUT WHEN BUTTON IS CLICKED
+  const name = nameInput.value
+  nameInput.value = ""
+
+  fetch('http://localhost:5000/insert', {
+    headers: {
+      'Content-type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify({ name: name })
+  })
+  .then(response => response.json())
+  .then(data => insertRowIntoTable(data['data']))
+}
+
+function insertRowIntoTable(data) {
+
+}
+
+
 // This is the function that will actually load the HTML table with data from mySQL
 function loadHTMLTable(data) {
   // Get the table's body so we can manipulate it based on data

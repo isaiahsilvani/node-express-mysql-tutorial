@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }))
 
 // CREATE
 app.post('/insert', (request, response) => {
-
+  console.log(request.body)
 })
 
 // READ
