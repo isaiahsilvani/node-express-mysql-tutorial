@@ -1,0 +1,1 @@
+Rewatch https://www.youtube.com/watch?v=vrj9AohVhPA between 19:30 and 27:55 if you forget how to set up a mySQL database table using XAMPP
