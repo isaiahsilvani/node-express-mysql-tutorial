@@ -68,6 +68,12 @@ class DbService {
       })
       // Here is the insertId that was created when we made a new row. Yay!!! :D
       console.log(insertId)
+      // Now we return this object with the data to the server, so we can send it to the frontend
+      return {
+        id: insertId,
+        name,
+        dateAdded
+      }
 
     } catch (error) {
         console.log(error)

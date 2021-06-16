@@ -28,7 +28,39 @@ addBtn.onclick = function () {
 }
 
 function insertRowIntoTable(data) {
+  console.log('data here.. BOOOOMMM', JSON.stringify(data))
+  const table = document.querySelector('table tbody')     // get the table via DOM
+  const tableDataDoesntExist = table.querySelector('.no-data')   // See if the .no-data DOM element was created. 
 
+  let tableHtml = "<tr>"
+
+  // Lets loop through the object. It works because the object's keys are in order with the table data we created
+  for (var key in data) {
+    // It's good practice to include hasOwnProperty, because if you access a key and it doesn't exist it will break the app
+    if (data.hasOwnProperty(key)) {
+      // If the key is dateAdded, you'll want to override the current value and convert to localString
+      if (key === 'dateAdded') {
+        data[key] = new Date(data[key]).toLocaleString()
+      }
+      // Create td in the new tr! Based on the key :)
+      tableHtml += `<td>${data[key]}</td>`
+    }
+  }
+  // We need to add delete and edit buttons to our row so we can have full CRUD functionality
+  tableHtml += `<td><button class="delete-row-btn" data-id=${data.id}>Delete</button></td>`
+  tableHtml += `<td><button class="edit-row-btn" data-id=${data.id}>Edit</button></td>`
+  // close the HTML table now that the data has been inserted
+  tableHtml += "</tr>"
+
+  // If there is indeed data, 
+  // If tableDataDoesntExist. Will return null if data does in fact exist. Otherwise, set innerHTML to blank slate
+  if (tableDataDoesntExist){
+    table.innerHTML = tableHtml
+  } else {
+    // else if data does exist, insert a new row into table body, and newRow html is the tableHtml string we constructed
+    const newRow = table.insertRow()
+    newRow.innerHTML = tableHtml
+  }
 }
 
 
@@ -49,7 +81,7 @@ function loadHTMLTable(data) {
     tableHtml += "<tr>"
     tableHtml += `<td>${id}</td>`
     tableHtml += `<td>${name}</td>`
-    tableHtml += `<td>${date_added}</td>`
+    tableHtml += `<td>${new Date(date_added).toLocaleString()}</td>`
     tableHtml += `<td><button class="delete-row-btn" data-id=${id}>Delete</button></td>`
     tableHtml += `<td><button class="edit-row-btn" data-id=${id}>Edit</button></td>`
     tableHtml += "</tr>"

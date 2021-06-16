@@ -16,11 +16,15 @@ app.use(express.urlencoded({ extended: false }))
 app.post('/insert', (request, response) => {
   console.log(request.body)
   const { name } = request.body
+  // Get the db instance we created
   const db = dbService.getDbServiceInstance()
+  // Get the name we just inserted into the database
+  // So we can insert it into the frontend
   const result = db.insertNewName(name)
-
+  // Send the result (when the promise is complete) to the frontend so we can 
+  // attach it to the HTML table body
   result
-  .then(data => response.json({ success: true}))
+  .then(data => response.json({ data: data}))
   .catch(err => console.log(err))
 })
 
