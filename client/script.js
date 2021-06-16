@@ -1,8 +1,11 @@
 // Add Event Listener to DOMContentLoaded event that will load the table from the database.
 // If the table is empty, set the table's innerhtml to no data.
 document.addEventListener('DOMContentLoaded', function() {
-  // Call loadHTMLTable and pass an empty array for now. Will replace with actual data from
-  // mySQL database
+  // Make a GET request to backend server to get all data from mysql and pass it to loadHTMLTable function
+  fetch('http://localhost:5000/getAll')  // Fetch data from backend
+  .then(response => response.json())     // THEN, turn response to json format
+  .then(data => console.log(data))       // THEN, do something with the data
+  
   loadHTMLTable([])
 })
 
