@@ -91,13 +91,16 @@ class DbService {
         connection.query(query, [id],(err, results) => {
           if (err) reject(new Error(err.message))
           // return the results when the promise is resolved!
-          resolve(results)
+          // But we only want to return the affect rows in the table
+          resolve(results.affectedRows)
         })
       })
-      console.log(response)
+      
+      return response === 1 ? true : false;
 
     } catch (error) {
       console.log(error)
+      return false
     }
   }
 }

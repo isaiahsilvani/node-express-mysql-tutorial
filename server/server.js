@@ -52,9 +52,9 @@ app.delete('/delete/:id', (request, response) => {
   // Send the result back to the frontend so we can remove the row from the
   // HTML table in real time!
   const result = db.deleteRowById(id)
-  
+
   result
-  .then(data => response.json({ success : true }))
+  .then(data => response.json({ success : data }))
   .catch(err => console.log(err))
 
 })

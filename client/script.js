@@ -33,7 +33,14 @@ function deleteRowById(id) {
     method: 'DELETE'
   })
   .then(response => response.json())
-  .then(data => console.log(data))
+  .then(data => {
+    // If the delete was successfully, data.success will return true
+    // and reload the page. There is definitely a better way to do this
+    // without reloading the page.. 
+    if (data.success) {
+      location.reload()
+    }
+  })
 }
 
 function editRowById(id) {
