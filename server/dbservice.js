@@ -103,6 +103,32 @@ class DbService {
       return false
     }
   }
+
+  async updateNameById(name, id) {
+    try {
+      // convert id to typeof number
+      console.log('--- db service', name, id)
+      id = parseInt(id)
+      const response = await new Promise((resolve, reject) => {
+        // DELETE THE ROW FROM names WHERE ID IS ? => that's a parameter. 
+        const query = "UPDATE names SET name = ? WHERE id = ?";
+        // Send the query to the database connection
+        connection.query(query, [name, id],(err, results) => {
+          if (err) reject(new Error(err.message))
+          // return the results when the promise is resolved!
+          // But we only want to return the affect rows in the table
+          resolve(results)
+        })
+      })
+      console.log(response)
+      
+      return response === 1 ? true : false;
+
+    } catch (error) {
+      console.log(error)
+      return false
+    }
+  }
 }
 
 // Export the DbService class so you can use it. I guess there is no ORM like in Mongoose and PostgreSQL

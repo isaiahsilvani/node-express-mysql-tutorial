@@ -39,6 +39,13 @@ app.get('/getAll', (request, response) => {
 })
 
 // UPDATE
+app.patch('/update', (request, response) => {
+  const { id, name } = request.body
+  const db = dbService.getDbServiceInstance()
+  console.log(name, id)
+  const result = db.updateNameById(name, id)
+
+})
 
 // DELETE
 app.delete('/delete/:id', (request, response) => {

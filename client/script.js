@@ -23,9 +23,12 @@ document.querySelector('table tbody').addEventListener('click', function(event) 
     deleteRowById(event.target.dataset.id)
   }
   if (event.target.className ==='edit-row-btn') {
-    editRowById(event.target.dataset.id)
+    console.log('edit function id', event.target.dataset.id)
+    handleEditRow(event.target.dataset.id)
   }
 })
+
+const updateBtn = document.querySelector('#update-row-btn')
 
 function deleteRowById(id) {
   // Make a DELETE request and pass the id in as params
@@ -43,8 +46,32 @@ function deleteRowById(id) {
   })
 }
 
-function editRowById(id) {
-  console.log(id)
+function handleEditRow(id) {
+  const updateSection = document.querySelector('#update-section')
+  updateSection.hidden = false;
+  document.querySelector('#update-name-input').dataset.id = id
+}
+
+updateBtn.onclick = function() {
+  const nameInput = document.querySelector('#update-name-input')
+  console.log(nameInput.value)
+  console.log(nameInput.dataset.id)
+  fetch('http://localhost:5000/update', {
+    method: 'PATCH',
+    headers: {
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      id: nameInput.dataset.id,
+      name: nameInput.value
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      location.reload()
+    }
+  })
 }
 
 addBtn.onclick = function () {
