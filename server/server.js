@@ -41,6 +41,23 @@ app.get('/getAll', (request, response) => {
 // UPDATE
 
 // DELETE
+app.delete('/delete/:id', (request, response) => {
+  // Get the dbService instance so we can use it's methods
+  const db = dbService.getDbServiceInstance()
+  // We must pass the idea in from request.params so we can
+  // delete the database by ID. Very familiar with this.
+  const { id } = request.params
+
+  console.log('fetch request hit')
+  // Send the result back to the frontend so we can remove the row from the
+  // HTML table in real time!
+  const result = db.deleteRowById(id)
+  
+  result
+  .then(data => response.json({ success : true }))
+  .catch(err => console.log(err))
+
+})
 
 
 app.listen(process.env.PORT, () => console.log('app is running'))

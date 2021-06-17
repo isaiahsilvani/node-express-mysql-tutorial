@@ -79,6 +79,27 @@ class DbService {
         console.log(error)
     }
   }
+
+  async deleteRowById(id) {
+    try {
+      // convert id to typeof number
+      id = parseInt(id)
+      const response = await new Promise((resolve, reject) => {
+        // DELETE THE ROW FROM names WHERE ID IS ? => that's a parameter. 
+        const query = "DELETE FROM names WHERE id = ?";
+        // Send the query to the database connection
+        connection.query(query, [id],(err, results) => {
+          if (err) reject(new Error(err.message))
+          // return the results when the promise is resolved!
+          resolve(results)
+        })
+      })
+      console.log(response)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 // Export the DbService class so you can use it. I guess there is no ORM like in Mongoose and PostgreSQL

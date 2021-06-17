@@ -11,6 +11,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // This is the function that will send the name input to the database and add it!
 const addBtn = document.querySelector('#add-name-btn')   // Grab the button using DOM
+
+// IMPORTANT: Since the delete and edit buttons are dynamically rendered and not part of the DOM on page load, we can't 
+// select them like we normally would. We have to make a dynamic click event listener to the body so IF the user clicks 
+// DELETE or EDIT, we actually do something based on what the event.target is
+document.querySelector('table tbody').addEventListener('click', function(event) {
+  console.log(event.target)
+  // If the event.target's className is delete, pass the ID to a function that will send the 
+  // id to the backend so we can delete it
+  if (event.target.className ==='delete-row-btn') {
+    deleteRowById(event.target.dataset.id)
+  }
+  if (event.target.className ==='edit-row-btn') {
+    editRowById(event.target.dataset.id)
+  }
+})
+
+function deleteRowById(id) {
+  // Make a DELETE request and pass the id in as params
+  fetch('http://localhost:5000/delete/' + id, {
+    method: 'DELETE'
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+}
+
+function editRowById(id) {
+  console.log(id)
+}
+
 addBtn.onclick = function () {
   const nameInput = document.querySelector('#name-input')    // GRAB THE NAME INPUT WHEN BUTTON IS CLICKED
   const name = nameInput.value
