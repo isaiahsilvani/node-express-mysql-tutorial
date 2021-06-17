@@ -11,6 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // This is the function that will send the name input to the database and add it!
 const addBtn = document.querySelector('#add-name-btn')   // Grab the button using DOM
+const searchBtn = document.querySelector('#search-btn')
+
+searchBtn.onclick = function() {
+  const searchValue = document.querySelector('#search-input').value
+  fetch('http://localhost:5000/search/' + searchValue)  // Fetch data from backend
+  .then(response => response.json())     // THEN, turn response to json format
+  .then(data => loadHTMLTable(data['data']))       // THEN, do something with the data that was recieved
+}
 
 // IMPORTANT: Since the delete and edit buttons are dynamically rendered and not part of the DOM on page load, we can't 
 // select them like we normally would. We have to make a dynamic click event listener to the body so IF the user clicks 
